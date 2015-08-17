@@ -71,7 +71,7 @@ h1 {
     </div>
 
     <div id="reminderContent">
-        <image id="twitchLogo" src="images\twitchLogo.png">
+        <image id="twitchLogo" src="assets/img/twitchLogo.png">
         <div="reminderContentText">
             <h1 id="reminderTitle"></h1>
             <span id="reminderDescription"></span>
@@ -128,7 +128,9 @@ function displayHUD() {
     c = (c + 1) % schedules.length;
 }
 
+// FIXME: This is kind of noob
 displayHUD();
+
 window.setInterval(displayHUD, 15000);
 </script>
 </body>
