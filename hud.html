@@ -2,67 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 <title>My Stream Animated Panels</title>
-<style>
-@font-face {
-    font-family: 'Dolce Vita';
-    src: url('fonts/Dolce Vita.ttf');
-}
-h1 {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
-.reminderContainer {
-    width: 0px;
-    height: 0px;
-    background: #2e5794;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
-    color: white;
-    font-family: 'Dolce Vita';
-    -webkit-box-shadow: 0px 0px 20px #0f3369;
-    -webkit-animation: animateReminder 10s 0s 1;
-}
-#reminderHeader {
-    width: 400px;
-    height: 26px;
-    background: #0f3369;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    font-size: 24px;
-}
-#reminderContent {
-    width: 400px;
-    height: 94px;
-    background: #2e5794;
-    position: relative;
-    overflow: hidden;
-    color: white;
-}
-#twitchLogo {
-    width: 90px;
-    height: 90px;
-    float: left;
-}
-
-@-webkit-keyframes animateReminder {
-    0%, 100% {
-        width: 0px;
-        height: 24px;
-    }
-    20%, 80% {
-        width: 400px;
-        height: 24px;
-    }
-    30%, 70% {
-        width: 400px;
-        height: 120px;
-    }
-}
-</style>		
+<link rel="stylesheet" type="test/css" href="assets/style/hud.css"></link>
 </head>
 <body>
 <div id="reminderContainer">
@@ -71,68 +11,14 @@ h1 {
     </div>
 
     <div id="reminderContent">
-        <image id="twitchLogo" src="assets/img/twitchLogo.png">
+        <image id="twitchLogo" src="assets/img/twitchLogo.png" />
         <div="reminderContentText">
             <h1 id="reminderTitle"></h1>
             <span id="reminderDescription"></span>
         </div>
     </div>
 </div>
-<script>
-var schedules = [
-{ 
-    'type': 'twitch',
-    'image': '',
-    'title': 'Krankes_Hirn',
-    'description': 'Miércoles y Jueves, 10pm GMT-5'
-},
-{ 
-    'type': 'youtube',
-    'image': '',
-    'title': 'El gordo criticón',
-    'description': 'Video ensayos sobre videojuegos'
-},
-{ 
-    'type': 'twitch',
-    'image': '',
-    'title': 'LTPhantom',
-    'description': 'Lunes, Martes, ~10pm GMT-5'
-},
-]
-
-var typeContainer = document.getElementById('type');
-var titleContainer = document.getElementById('reminderTitle');
-var descContainer = document.getElementById('reminderDescription');
-
-
-var c = 0;
-function displayHUD() {
-    console.log('displayHUD');
-
-    typeContainer.innerHTML = schedules[c].type;
-    titleContainer.innerHTML = schedules[c].title;
-    descContainer.innerHTML = schedules[c].description;
-
-    e = document.getElementById('reminderContainer');
-
-    // -> removing the class
-    e.classList.remove("reminderContainer");
-
-    // -> triggering reflow /* The actual magic */
-    // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-    e.offsetWidth = e.offsetWidth;
-
-    // -> and re-adding the class
-    e.classList.add("reminderContainer");
-
-    c = (c + 1) % schedules.length;
-}
-
-// FIXME: This is kind of noob
-displayHUD();
-
-window.setInterval(displayHUD, 15000);
-</script>
+<script src="assets/js/hud.js"></script>
 </body>
 </html>
 
