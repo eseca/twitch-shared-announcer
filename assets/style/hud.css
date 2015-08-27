@@ -23,7 +23,7 @@ h1 {
     -webkit-animation: animateReminder 10s 0s 1;
 }
 
-#reminderHeader {
+.reminderHeader {
     width: 400px;
     height: 26px;
     background: #0f3369;
@@ -33,7 +33,7 @@ h1 {
     font-size: 24px;
 }
 
-#reminderContent {
+.reminderContent {
     width: 400px;
     height: 94px;
     background: #2e5794;
@@ -42,7 +42,7 @@ h1 {
     color: white;
 }
 
-#twitchLogo {
+.twitchLogo {
     width: 90px;
     height: 90px;
     float: left;
