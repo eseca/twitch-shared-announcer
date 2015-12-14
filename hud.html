@@ -1,23 +1,25 @@
-<html>
+<html ng-app="announcerApp">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 <title>My Stream Animated Panels</title>
 <link rel="stylesheet" type="test/css" href="assets/style/hud.css"></link>
 </head>
-<body>
-<div class="reminderContainer">
-    <div class="reminderHeader">
-        <span id="type">No te pierdas tambi&eacute;n:</span>
-    </div>
+<body ng-controller="HudCtrl">
+<div class="reminderContainer" ng-class="current.type" animate-on-change="current">
+  <div class="reminderHeader">
+    <span>No te pierdas tambi&eacute;n:</span>
+  </div>
 
-    <div class="reminderContent">
-        <img class="twitchLogo" src="assets/img/twitchLogo.png" />
-        <div class="reminderContentText">
-            <h1 id="reminderTitle"></h1>
-            <span id="reminderDescription"></span>
-        </div>
+  <div class="reminderContent">
+    <img class="logo" ng-src="{{ current.image }}" />
+    <div class="reminderContentText">
+      <h1 id="reminderTitle">{{ current.title }}</h1>
+      <span id="reminderDescription">{{ current.text }}</span>
     </div>
+  </div>
 </div>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="assets/js/hud.js"></script>
 </body>
 </html>
