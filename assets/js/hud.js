@@ -1,6 +1,6 @@
 var announcerApp = angular.module('announcerApp', ['ngAnimate']);
 
-announcerApp.controller('HudCtrl', ['$scope', '$interval', function($scope, $interval) {
+announcerApp.controller('HudCtrl', ['$scope', '$interval', '$http', function($scope, $interval, $http) {
     console.log("Loading HudCtrl...");
     $scope.animation_class = 'hidden';
     $scope.i = 0;
@@ -27,7 +27,7 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', function($scope, $int
             "text": "Quejándose de los juegos, en vivo"
         },
         {
-            "type": "twitch",
+            "type": "twitch-team",
             "title": "¡La mejor variedad de juegos en Twitch!",
             "image": "assets/img/gaminglat.png",
             "text": "No olvides revisar la programación"
@@ -36,11 +36,28 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', function($scope, $int
 
     $scope.fetchInfo = function() {
         $scope.current = $scope.announcements[$scope.i];
+        if ($scope.current.type == 'twitch') {
+            $scope.getTwitchLogo($scope.current.channel);
+        }
         console.log($scope.current);
         $scope.i = ($scope.i+1) % $scope.announcements.length;
     };
 
-    $interval($scope.fetchInfo, 60000);
+    $scope.getTwitchLogo = function (channel) {
+        var endpoint = "https://api.twitch.tv/kraken/channels/" + channel;
+        $http.get(endpoint).then($scope.successTwitchLogoCallback, $scope.errorTwitchLogoCallback);
+    };
+
+    $scope.successTwitchLogoCallback = function ( response ) {
+        console.log(response);
+        $scope.current.image = response.data.logo;
+    };
+
+    $scope.errorTwitchLogoCallback = function ( response ) {
+        console.log(response);
+    };
+
+    $interval($scope.fetchInfo, 300000);
 }]);
 
 announcerApp.directive('animateOnChange', function($animate,$timeout) {
