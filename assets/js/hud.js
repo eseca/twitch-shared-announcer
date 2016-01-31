@@ -7,11 +7,16 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', '$http', function($sc
     $scope.current = {};
     $scope.announcements = [
         {
-            "type": "series",
-            "title": "Camino a Mighty no. 9",
-            "image": "assets/img/road_to_mighty_no_9/beck.png",
-            "text": "Sábados 16hrs GMT-6. A partir del 26 de Diciembre"
+            "type": "now-watching",
+            "channel": "eseca",
+            "image": "assets/img/twitchLogo.png",
         },
+        //{
+            //"type": "series",
+            //"title": "Camino a Mighty no. 9",
+            //"image": "assets/img/road_to_mighty_no_9/beck.png",
+            //"text": "Sábados 16hrs GMT-6. A partir del 26 de Diciembre"
+        //},
         {
             "type": "twitch",
             "title": "Pranzedd",
@@ -35,13 +40,35 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', '$http', function($sc
     ];
 
     $scope.fetchInfo = function() {
+        $scope.current = {};
         $scope.current = $scope.announcements[$scope.i];
-        if ($scope.current.type == 'twitch') {
-            $scope.getTwitchLogo($scope.current.channel);
+        switch ($scope.current.type) {
+            case 'twitch':
+                $scope.getTwitchLogo($scope.current.channel);
+                break;
+            case 'now-watching':
+                $scope.getNowWatching($scope.current.channel);
+                break;
         }
+        console.log("fetchInfo: " + $scope.current);
         console.log($scope.current);
         $scope.i = ($scope.i+1) % $scope.announcements.length;
     };
+
+    $scope.getNowWatching = function (channel) {
+        var endpoint = "https://api.twitch.tv/kraken/channels/" + channel;
+        $http.get(endpoint).then($scope.successNowWatchingCallback, $scope.errorNowWatchingCallback);
+    }
+
+    $scope.successNowWatchingCallback = function (response) {
+        $scope.current.title = response.data.game;
+        $scope.current.text = response.data.status;
+        $scope.current.image = `http://static-cdn.jtvnw.net/ttv-boxart/${response.data.game}-136x190.jpg`;
+    }
+
+    $scope.errorNowWatchingCallback = function (response) {
+        console.log(response);
+    }
 
     $scope.getTwitchLogo = function (channel) {
         var endpoint = "https://api.twitch.tv/kraken/channels/" + channel;
@@ -49,7 +76,6 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', '$http', function($sc
     };
 
     $scope.successTwitchLogoCallback = function ( response ) {
-        console.log(response);
         $scope.current.image = response.data.logo;
     };
 
@@ -58,6 +84,7 @@ announcerApp.controller('HudCtrl', ['$scope', '$interval', '$http', function($sc
     };
 
     $interval($scope.fetchInfo, 300000);
+    //$interval($scope.fetchInfo, 16000);
 }]);
 
 announcerApp.directive('animateOnChange', function($animate,$timeout) {
