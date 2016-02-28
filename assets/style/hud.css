@@ -30,7 +30,7 @@ h1 {
   position: relative;
   overflow: hidden;
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
   color: white;
 }
 
@@ -42,11 +42,19 @@ h1 {
   color: white;
 }
 
+.reminderContent h1 {
+  font-size: 26px;
+}
+
+.reminderContent span {
+  font-size: 24px;
+}
+
 .logo {
   width: 90px;
   height: 90px;
   float: left;
-  background-size: contain;
+  object-fit: contain;
 }
 
 /* Themes */
@@ -70,6 +78,15 @@ h1 {
 }
 .series .reminderContent {
   background: #3a4877;
+}
+.now-watching.reminderContainer {
+  -webkit-box-shadow: 0px 0px 20px #181d31;
+}
+.now-watching .reminderHeader {
+  background: #404040;
+}
+.now-watching .reminderContent {
+  background: #565656;
 }
 
 
